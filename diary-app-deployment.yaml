@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diary-app
+  labels:
+    app: diary
+
+spec:
+  selector:
+    matchLabels:
+      app: diary
+  template:
+    metadata:
+      labels:
+        app: diary
+    spec:
+      containers:
+      - name: diary-app
+        image: chioffor/diary-app
+        ports:
+        - containerPort: 5000
+        
