@@ -4,12 +4,20 @@ import TaskPage from './Task/TaskPage';
 import DiaryPage from './Diary/DiaryPage';
 import CategoryPage from './Task/Categories/CategoryPage';
 import SubtaskPage from './SubTask/SubTaskPage';
+// import { getStorageItems } from './helpers';
 
 function App() {
 
   const [clicked, setClicked] = useState('');
   const [category, setCategory] = useState({});
   const [subtask, setSubtask] = useState({});
+
+  // const [categories, setCategories] = useState([]);    
+
+  // useEffect(() => {
+  //     let category = getStorageItems() || [];
+  //     setCategories(category);
+  // }, []);
 
   
   const goToPage = (page) => {
@@ -32,6 +40,7 @@ function App() {
       return (
         <TaskPage 
           openCategory={openCategory}
+          // categories={categories}
         />
       );
 
@@ -53,6 +62,7 @@ function App() {
           categoryObj={category} 
           openSubtaskPage={openSubtaskPage}
           goToPage={goToPage}
+          openCategory={openCategory}
         />
       );
 

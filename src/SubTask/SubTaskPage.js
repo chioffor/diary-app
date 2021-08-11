@@ -1,6 +1,6 @@
 function SubtaskPage({ taskObj, category, goToPage }) {
     return (
-        <div className="position-relative container border shadow p-3 mb-5 rounded-3 mt-3 page">
+        <div className="position-relative container-fluid border shadow p-3 rounded-3 page">
             <button className="float-end btn" onClick={e => goToPage('category-page')}>
                 <i className="bi bi-x-lg"></i>
             </button>

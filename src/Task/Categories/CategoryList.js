@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import NewCategoryCreate from './NewCategoryCreate';
 import NewCategoryInput from './NewCategoryInput';
 import {getStorageItems} from '../../helpers';
+import { EmojiList } from '../../emojis';
 
 function CategoryList({ openCategory }) {   
 
@@ -22,6 +23,8 @@ function CategoryList({ openCategory }) {
         openCategory(catego);
     }
 
+    const emoji = "0x" + EmojiList['emoticons'][2];
+    const e = String.fromCodePoint(emoji);
 
     const categos = categories ? categories.map((catego) => (
 
@@ -30,9 +33,9 @@ function CategoryList({ openCategory }) {
             key={catego.id}
             onClick={e => handleCategoryItemClick(e, catego)}
         >
-            <div className="">
+            <div className="category-list-icon">
                 <span className="me-3"><i className={catego.iconClassName}></i></span>
-                {catego.name}
+                <span className="category-list-name">{catego.name}</span>
             </div>
             <div className="bg-light rounded">
                 <div className="font-monospace fw-light">{catego.tasks.length}</div>
@@ -44,7 +47,7 @@ function CategoryList({ openCategory }) {
         <div>
             <div className="list-group-item border-0 mb-2 d-flex">
                 <div className="flex-grow-1">
-                    <span className="me-3"><i className="bi bi-house"></i></span>
+                    <span className="me-3">&#x1f605;</span>
                     Home
                 </div>
                 <div className="bg-light rounded">
@@ -54,7 +57,7 @@ function CategoryList({ openCategory }) {
             
             <div className="list-group-item border-0 mb-2 d-flex">
                 <div className="flex-grow-1">
-                    <span className="me-3"><i className="bi bi-calendar"></i></span>
+                    <span className="me-3">{e}</span>
                     Today
                 </div>
                 <div className="bg-light rounded">
@@ -76,6 +79,10 @@ function CategoryList({ openCategory }) {
                             
                         /> }
             </ul>
+
+            <div>
+                
+            </div>
         </div>
     );
 }

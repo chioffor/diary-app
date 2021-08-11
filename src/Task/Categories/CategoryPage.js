@@ -1,10 +1,10 @@
-import { update } from "lodash";
+// import { update } from "lodash";
 import { useEffect, useState } from "react";
-import { getStorageItems, updateStorage, getTasks} from '../../helpers';
+import { getStorageItems, updateStorage } from '../../helpers';
 import { v4 } from 'uuid';
 import { Dropdown } from 'react-bootstrap';
 
-function CategoryPage({ categoryObj, openSubtaskPage, goToPage }) {
+function CategoryPage({ categoryObj, openSubtaskPage, goToPage, openCategory }) {
 
     const [clicked, setClicked] = useState(false);
     const [task, setTask] = useState('');  
@@ -39,7 +39,7 @@ function CategoryPage({ categoryObj, openSubtaskPage, goToPage }) {
     // };
 
     return (
-        <div className="container border shadow p-3 mb-3 rounded mt-3 page" id="category-page">
+        <div className="container-fluid border shadow p-3 rounded page" id="category-page">
             <button className="float-end btn" onClick={e => goToPage('task-page')}>
                 <i className="bi bi-x-lg"></i>
             </button>
@@ -47,11 +47,16 @@ function CategoryPage({ categoryObj, openSubtaskPage, goToPage }) {
 
             <div className="p-2">
             <Dropdown>
-                <Dropdown.Toggle variant="light" className="shadow-sm p-2 mb-1 rounded">
+                <Dropdown.Toggle variant="" className="shadow-sm p-2 mb-1 rounded">
                     <i className={categoryObj.iconClassName}></i>
                     <span className="me-2 fw-bold">{categoryObj.name}</span>
                 </Dropdown.Toggle>
-
+                {/* <Dropdown.Menu>
+                    <Dropdown.Item>Hey</Dropdown.Item>
+                    <Dropdown.Item>you</Dropdown.Item>
+                    <Dropdown.Item>there</Dropdown.Item>
+                </Dropdown.Menu> */}
+                <ListOfCategories openCategory={openCategory} />
             </Dropdown>
             </div>
 
@@ -87,6 +92,27 @@ function CategoryPage({ categoryObj, openSubtaskPage, goToPage }) {
         
     );
 }
+function ListOfCategories({ openCategory }) {
+
+    const handleClick = (category) => {
+        // openCategory('chiikito');
+        openCategory(category);
+    }
+
+    const x = JSON.parse(localStorage.getItem('category')).map((category) => (
+        <Dropdown.Item key={category.id} onClick={e => handleClick(category)}>
+                <i className={category.iconClassName}></i>
+                {category.name}
+                
+        </Dropdown.Item>
+    ));
+    return (
+        <Dropdown.Menu>
+            {x}
+        </Dropdown.Menu>
+    );
+}
+
 
 function TasksList({ categoryObj, openSubtaskPage }) {
 
