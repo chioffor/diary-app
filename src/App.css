@@ -13,8 +13,9 @@
 
 
 .picker {
-  /* display: none; */
-  width: 200px;
+  display: none;
+  width: auto;
+  height: auto;
   position: absolute;
   z-index: 1;
 }
@@ -24,10 +25,23 @@
   border-radius: 12px;
   padding: 5px 10px;
   font-size: small;
+  color: white;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.em {
+  cursor: pointer;
 }
 
 .frequently-used {
   font-size: smaller;
+}
+
+.show {
+  display: block;
 }
 
 .bi-chevron-down {

@@ -1,19 +1,20 @@
 import { useState } from 'react';
-// import { OverlayTrigger } from 'react-bootstrap';
 import { v4 } from 'uuid';
 import { EmojiList } from '../../emojis';
 import { storageExists } from '../../helpers';
+import Picker from '../../Picker/Picker';
 
 function NewCategoryInput({ openCategory }) {
 
-    const [chosen, setChosen] = useState('');
     const [category, setCategory] = useState('');
+    const [iconObject, setIconObject] = useState({});
     
-
-    const choice = chosen ? chosen : `bi bi-app me-2 text-info`;
-
-    const setColor = (e, color) => {
-        setChosen(`bi bi-app me-2 text-${color}`);
+    const setButtonLogo = (type, value) => {
+        setIconObject({
+            type: type,
+            value: value,
+        });
+        document.getElementById("picker").classList.toggle('show');
     };
 
     const handleChange = (e) => {
@@ -26,7 +27,7 @@ function NewCategoryInput({ openCategory }) {
         let data = [
             {
                 name: category,
-                iconClassName: chosen || choice,
+                icon: iconObject,
                 id: v4(),
                 tasks: [],
             },
@@ -35,7 +36,7 @@ function NewCategoryInput({ openCategory }) {
         if (storageExists()) {
             let newData = {
                 name: category,
-                iconClassName: chosen || choice,
+                icon: iconObject,
                 id: v4(),
                 tasks: [],
             };
@@ -51,51 +52,34 @@ function NewCategoryInput({ openCategory }) {
                 
     };
 
-    const handleClick = (
-        <div className="d-flex">
-            <div>Color</div>
-            <div>Emoji</div>
-        </div>
-    );
+    const handleClick = (e) => {
+        console.log(Object.keys(EmojiList), );
+        document.getElementById("picker").classList.toggle("show");
+    }
 
-    const emojis = EmojiList['emoticons'];
-    const emojiList = emojis.map((emoji) => {
-        let i = "0x" + emoji;
-        let e = String.fromCodePoint(i);
-        return (
-            <div className="col">{e}</div>
-        );
-    });
+
+    const className = `bi bi-app text-${iconObject.value}`;    
+    const icon = iconObject.type  
+                    ? iconObject.type === 'color' 
+                        ? <i className={className}></i>
+                        : String.fromCodePoint(iconObject.value)
+                    : <i className="bi bi-app text-info"></i>;
 
     return (       
         <div className="p-2 mb-0">            
             <div className="d-flex border-0 mb-2">
-                {/* <Dropdown>
-                    <Dropdown.Toggle variant="light">
-                            <i className={choice}></i>
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item><ColorPicker setColor={setColor} /></Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown> */}
-                {/* <OverlayTrigger placement="right" overlay={popover}> */}
+                
                 <div className="ms-2 position-relative dropdown">
-                    <button class="btn btn-primary border-0" onClick={handleClick}>Click me</button>
-                    <div className="picker shadow p-2 mt-1">
-                        <div className="d-flex mb-2">
-                            <div className="picker-color text-white ms-1 me-2">Colors</div>
-                            <div className="picker-emoji text-white">Emoji</div>
-                        </div>
-                        <div className="ms-1 text-muted frequently-used">Frequently used</div>
-                        <div className="row row-cols-10">
-                            {emojiList}
-                        </div>
+                    <button className="btn bg-light border-0" onClick={handleClick}>
+                        <span className="me-2">{icon}</span>
+                        <i className="bi bi-chevron-down text-dark"></i>
+                    </button>
+                    <div className="picker shadow p-2 mt-1 bg-light" id="picker">
+                        <Picker setButtonLogo={setButtonLogo} />                    
                         
                     </div>
                 </div>
                 
-                {/* </OverlayTrigger> */}
                 <form onSubmit={handleSubmit}>
 
                     <input 
@@ -113,33 +97,5 @@ function NewCategoryInput({ openCategory }) {
     )
 }
 
-function ColorPicker({ setColor }) {
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        //alert('yaya');
-    }
-    const colors = ["primary", "dark", "secondary", "success", "danger", "light", "warning", "info"];
-    const picker = colors.map((color) => {
-        let clas = `bi bi-app text-${color}`;
-        return (
-            <div 
-                className="col" 
-                key={color}
-                onClick={e => setColor(e, color)}
-            >
-                <i className={clas}></i>
-            </div>
-        );
-    });
-    return (
-        <div>
-            <span onClick={handleClick}>Color</span>
-            <div className="row row-cols-3">
-                {picker}
-            </div>
-        </div>
-    );
-}
 
 export default NewCategoryInput;

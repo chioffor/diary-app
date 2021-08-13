@@ -18,25 +18,12 @@ function CategoryPage({ categoryObj, openSubtaskPage, goToPage, openCategory }) 
         setTask(e.target.value);
     };
 
-    // const handleTaskSubmit = (e) => {
-    //     e.preventDefault();
-    //     let taskObj = {
-    //         name: task,
-    //         subtasks: [],
-    //         id: v4(),
-    //     };
-
-    //     let items = getStorageItems();
-        
-    //     let t = items.find(task => (task.id === categoryObj.id));
-    //     let taskIndex = items.indexOf(t);
-
-    //     updateStorage(taskIndex, taskObj);
-    //     console.log(items[taskIndex].tasks)
-    //     //openSubtaskPage(taskObj);
-
-        
-    // };
+    const className = `bi bi-app text-${categoryObj.icon.value}`;
+    const icon = categoryObj.icon.type  
+                    ? categoryObj.icon.type === 'color' 
+                        ? <i className={className}></i>
+                        : String.fromCodePoint(categoryObj.icon.value)
+                    : <i className="bi bi-app text-info"></i>;
 
     return (
         <div className="container-fluid border shadow p-3 rounded page" id="category-page">
@@ -48,14 +35,10 @@ function CategoryPage({ categoryObj, openSubtaskPage, goToPage, openCategory }) 
             <div className="p-2">
             <Dropdown>
                 <Dropdown.Toggle variant="" className="shadow-sm p-2 mb-1 rounded">
-                    <i className={categoryObj.iconClassName}></i>
+                    <span className="me-2">{icon}</span>
                     <span className="me-2 fw-bold">{categoryObj.name}</span>
                 </Dropdown.Toggle>
-                {/* <Dropdown.Menu>
-                    <Dropdown.Item>Hey</Dropdown.Item>
-                    <Dropdown.Item>you</Dropdown.Item>
-                    <Dropdown.Item>there</Dropdown.Item>
-                </Dropdown.Menu> */}
+                
                 <ListOfCategories openCategory={openCategory} />
             </Dropdown>
             </div>

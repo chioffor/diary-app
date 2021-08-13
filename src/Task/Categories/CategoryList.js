@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import NewCategoryCreate from './NewCategoryCreate';
 import NewCategoryInput from './NewCategoryInput';
 import {getStorageItems} from '../../helpers';
-import { EmojiList } from '../../emojis';
 
 function CategoryList({ openCategory }) {   
 
@@ -21,33 +20,38 @@ function CategoryList({ openCategory }) {
 
     const handleCategoryItemClick = (e, catego) => {
         openCategory(catego);
-    }
+    }    
 
-    const emoji = "0x" + EmojiList['emoticons'][2];
-    const e = String.fromCodePoint(emoji);
+    const categos = categories ? categories.map((catego) => {
+        let icon;
+        if (catego.icon.type === 'color') {
+            let className = `bi bi-app me-1 text-${catego.icon.value}`;
+            icon = <i className={className}></i>;
+        } else {
+            let i = catego.icon.value;
+            icon = String.fromCodePoint(i);
+        }
 
-    const categos = categories ? categories.map((catego) => (
-
-        <li 
+        return (<li 
             className="list-group-item border-0 mb-2 d-flex btn justify-content-between" 
             key={catego.id}
             onClick={e => handleCategoryItemClick(e, catego)}
         >
             <div className="category-list-icon">
-                <span className="me-3"><i className={catego.iconClassName}></i></span>
+                <span className="me-3">{icon}</span>
                 <span className="category-list-name">{catego.name}</span>
             </div>
             <div className="bg-light rounded">
                 <div className="font-monospace fw-light">{catego.tasks.length}</div>
             </div>
-        </li> 
-    )) : [];
+        </li>) 
+    }) : [];
 
     return (
         <div>
             <div className="list-group-item border-0 mb-2 d-flex">
                 <div className="flex-grow-1">
-                    <span className="me-3">&#x1f605;</span>
+                    <span className="me-3">&#127968;</span>
                     Home
                 </div>
                 <div className="bg-light rounded">
@@ -57,7 +61,7 @@ function CategoryList({ openCategory }) {
             
             <div className="list-group-item border-0 mb-2 d-flex">
                 <div className="flex-grow-1">
-                    <span className="me-3">{e}</span>
+                    <span className="me-3">&#128197;</span>
                     Today
                 </div>
                 <div className="bg-light rounded">
@@ -67,17 +71,14 @@ function CategoryList({ openCategory }) {
 
             <hr/>          
         
+            { 
+                clicked ? 
+                    <NewCategoryInput openCategory={openCategory} /> : 
+                        <NewCategoryCreate displayNewTaskInput={displayNewTaskInput} />
+            }
             <ul className="list-group border-0">
-                {categos}
+                {categos}                
                 
-                { clicked ? 
-                    <NewCategoryInput
-                        openCategory={openCategory} 
-                    /> : 
-                        <NewCategoryCreate 
-                            displayNewTaskInput={displayNewTaskInput} 
-                            
-                        /> }
             </ul>
 
             <div>
