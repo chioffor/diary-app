@@ -1,3 +1,5 @@
+import { getIcon } from '../helpers';
+
 function SubtaskPage({ taskObj, category, goToPage }) {
     return (
         <div className="position-relative container-fluid border shadow p-3 rounded-3 page">
@@ -12,23 +14,25 @@ function SubtaskPage({ taskObj, category, goToPage }) {
             
             <hr />
             <div className="subtask-section">
-                <div className="bg-light border mt-3 rounded-3">
+                <div className="border-0 mt-3 rounded-3 subtask-options">
                     <div className="d-flex justify-content-between p-2">
-                        <div>Category</div>
-                        <div className="border bg-white p-2 rounded-3">
-                            <span><i className={category.iconClassName}></i></span>
-                            <span className="fw-bold">{category.name}</span>
+                        <div className="subtask-options-text my-auto">Category</div>
+                        <div className="shadow-sm p-2 rounded-3 category-button my-auto">
+                            <span className="my-auto">{getIcon(category)}</span>
+                            <span className="my-auto category-list-item-name">{category.name}</span>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between p-2">
-                        <div>Due date</div>
-                        <div>10/05/2021</div>
+                        <div className="subtask-options-text my-auto">Due date</div>
+                        <div className="border-0 shadow-sm bg-white p-2 rounded-3">
+                            <span className="category-list-item-name my-auto">10/05/2021</span>
+                        </div>
                     </div>              
 
                 </div>
 
                 <div>
-                    <textarea className="form-control mt-3 bg-light" placeholder="Write a note..." rows="5"></textarea>
+                    <textarea className="form-control border-0 mt-3 bg-light subtask-options" placeholder="Write a note..." rows="5"></textarea>
                 </div>
 
                 <div className="mt-2">

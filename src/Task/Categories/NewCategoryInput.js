@@ -7,7 +7,7 @@ import Picker from '../../Picker/Picker';
 function NewCategoryInput({ openCategory }) {
 
     const [category, setCategory] = useState('');
-    const [iconObject, setIconObject] = useState({});
+    const [iconObject, setIconObject] = useState({ type: 'color', value: 'info' });
     
     const setButtonLogo = (type, value) => {
         setIconObject({
@@ -27,7 +27,7 @@ function NewCategoryInput({ openCategory }) {
         let data = [
             {
                 name: category,
-                icon: iconObject,
+                icon: iconObject ,
                 id: v4(),
                 tasks: [],
             },
@@ -36,7 +36,7 @@ function NewCategoryInput({ openCategory }) {
         if (storageExists()) {
             let newData = {
                 name: category,
-                icon: iconObject,
+                icon: iconObject || { type: 'color', value: 'info'},
                 id: v4(),
                 tasks: [],
             };

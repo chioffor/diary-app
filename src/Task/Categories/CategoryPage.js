@@ -1,18 +1,20 @@
 // import { update } from "lodash";
 import { useEffect, useState } from "react";
-import { getStorageItems, updateStorage } from '../../helpers';
+import { getStorageItems, updateStorage, toTitleCase } from '../../helpers';
 import { v4 } from 'uuid';
-import { Dropdown } from 'react-bootstrap';
 
 function CategoryPage({ categoryObj, openSubtaskPage, goToPage, openCategory }) {
 
     const [clicked, setClicked] = useState(false);
-    const [task, setTask] = useState('');  
-    
+    const [task, setTask] = useState('');    
 
     const handleClick = () => {
         setClicked(true);
     };
+
+    // const handleClick1 = () => {
+    //     document.getElementById("picker").classList.toggle('show');
+    // }
 
     const handleTaskChange = (e) => {
         setTask(e.target.value);
@@ -32,21 +34,16 @@ function CategoryPage({ categoryObj, openSubtaskPage, goToPage, openCategory }) 
             </button>
             <h4 className="text-center mt-3 mb-2">Category Page</h4>
 
-            <div className="p-2">
-            <Dropdown>
-                <Dropdown.Toggle variant="" className="shadow-sm p-2 mb-1 rounded">
-                    <span className="me-2">{icon}</span>
-                    <span className="me-2 fw-bold">{categoryObj.name}</span>
-                </Dropdown.Toggle>
-                
-                <ListOfCategories openCategory={openCategory} />
-            </Dropdown>
+            <div className="p-2 me-3">
+                <div className="d-flex">                   
+                    <div className="my-auto">
+                        <div className="category-list-icon">
+                            <span className="me-2">{icon}</span>
+                            <span className="category-list-item-name">{toTitleCase(categoryObj.name)}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            
-                {/* <div className="bg-light rounded">
-                    <div className="font-monospace fw-light">{categoryObj.tasks.length}</div>
-                </div> */}
 
             <div>
                 {
@@ -71,30 +68,37 @@ function CategoryPage({ categoryObj, openSubtaskPage, goToPage, openCategory }) 
                     <AddTask handleClick={handleClick} /> 
                 }
             </div>
-        </div>
+        </div>        
+    );
+}
+
+// function ListOfCategories({ openCategory, categoryObj }) {
+
+//     const handleClick = (category) => {
+//         openCategory(category);
+//     }
+
+//     const x = JSON.parse(localStorage.getItem('category')).map((category) => {
+
+//         const icon = getIcon(category);
+//         if (category.id === categoryObj.id) {
+//             return false;            
+//         }
+//         return ( 
+//             <div className="d-flex mb-2 category-list-item btn" key={category.id} onClick={e => handleClick(category)}>
+//                 <div className="my-auto">{icon}</div>
+//                 <div className="my-auto">{category.name}</div>
+//             </div>            
+//         );
+//     });
+
+//     return (
+//         <div>
+//             {x}
+//         </div>
         
-    );
-}
-function ListOfCategories({ openCategory }) {
-
-    const handleClick = (category) => {
-        // openCategory('chiikito');
-        openCategory(category);
-    }
-
-    const x = JSON.parse(localStorage.getItem('category')).map((category) => (
-        <Dropdown.Item key={category.id} onClick={e => handleClick(category)}>
-                <i className={category.iconClassName}></i>
-                {category.name}
-                
-        </Dropdown.Item>
-    ));
-    return (
-        <Dropdown.Menu>
-            {x}
-        </Dropdown.Menu>
-    );
-}
+//     );
+// }
 
 
 function TasksList({ categoryObj, openSubtaskPage }) {
@@ -188,7 +192,7 @@ function EmptyCategoryDisplay() {
         <div>
             <div className="text-muted text-center">No tasks yet!</div>            
         </div>
-    )
+    );
 }
 
 

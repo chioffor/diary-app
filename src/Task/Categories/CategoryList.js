@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import NewCategoryCreate from './NewCategoryCreate';
 import NewCategoryInput from './NewCategoryInput';
-import {getStorageItems} from '../../helpers';
+import { getStorageItems, getIcon, toTitleCase } from '../../helpers';
 
 function CategoryList({ openCategory }) {   
 
@@ -10,7 +10,7 @@ function CategoryList({ openCategory }) {
     const [categories, setCategories] = useState([]);    
 
     useEffect(() => {
-        let category = getStorageItems() || [];
+        let category = getStorageItems();
         setCategories(category);
     }, []);
 
@@ -22,63 +22,35 @@ function CategoryList({ openCategory }) {
         openCategory(catego);
     }    
 
-    const categos = categories ? categories.map((catego) => {
-        let icon;
-        if (catego.icon.type === 'color') {
-            let className = `bi bi-app me-1 text-${catego.icon.value}`;
-            icon = <i className={className}></i>;
-        } else {
-            let i = catego.icon.value;
-            icon = String.fromCodePoint(i);
-        }
+    const categos = categories.map((category) => {
+        
+        const icon = getIcon(category);
 
         return (<li 
-            className="list-group-item border-0 mb-2 d-flex btn justify-content-between" 
-            key={catego.id}
-            onClick={e => handleCategoryItemClick(e, catego)}
+            className="list-group-item border-0 d-flex btn justify-content-between category-list-item" 
+            key={category.id}
+            onClick={e => handleCategoryItemClick(e, category)}
         >
             <div className="category-list-icon">
-                <span className="me-3">{icon}</span>
-                <span className="category-list-name">{catego.name}</span>
+                <span className="me-2 my-auto">{icon}</span>
+                <span className="category-list-item-name my-auto">{toTitleCase(category.name)}</span>
             </div>
-            <div className="bg-light rounded">
-                <div className="font-monospace fw-light">{catego.tasks.length}</div>
+            <div className="">
+                <div className="font-monospace my-auto">{category.tasks.length}</div>
             </div>
         </li>) 
-    }) : [];
+    });
 
     return (
-        <div>
-            <div className="list-group-item border-0 mb-2 d-flex">
-                <div className="flex-grow-1">
-                    <span className="me-3">&#127968;</span>
-                    Home
-                </div>
-                <div className="bg-light rounded">
-                    <div className="font-monospace">12</div>
-                </div>
-            </div>
-            
-            <div className="list-group-item border-0 mb-2 d-flex">
-                <div className="flex-grow-1">
-                    <span className="me-3">&#128197;</span>
-                    Today
-                </div>
-                <div className="bg-light rounded">
-                    <div className="font-monospace fw-lighter">6</div>
-                </div>
-            </div> 
-
-            <hr/>          
+        <div>            
         
             { 
                 clicked ? 
                     <NewCategoryInput openCategory={openCategory} /> : 
                         <NewCategoryCreate displayNewTaskInput={displayNewTaskInput} />
             }
-            <ul className="list-group border-0">
-                {categos}                
-                
+            <ul className="list-group border-0">                
+                {categos}                                
             </ul>
 
             <div>

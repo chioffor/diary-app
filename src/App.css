@@ -11,13 +11,13 @@
   position: relative;
 }
 
-
 .picker {
   display: none;
   width: auto;
   height: auto;
   position: absolute;
   z-index: 1;
+  /* padding: 16px 20px; */
 }
 
 .picker-color, .picker-emoji {
@@ -28,8 +28,50 @@
   color: white;
 }
 
-.icon {
+.icon, .category-list-item {
   cursor: pointer;
+}
+
+.subtask-options {
+  padding: 10px 20px;
+  background-color: rgb(238, 238, 238);
+}
+
+.subtask-options-text {
+  font-weight: 550;
+  color: rgb(68, 68, 68);
+}
+
+.category-list-item:hover {
+  background-color: lightgray;
+}
+
+.font-monospace, .default-category-item, .category-list-item-name {
+  color: rgb(49, 7, 7);
+  font-weight: 550;
+  font-size: 15px;
+}
+/* .categor-list-item-name {
+  width: 10px;
+  word-wrap: break-word;
+} */
+
+.bi-app {
+  font-size: 20px;
+  font-weight: 100;
+}
+
+.category-button {
+  padding: 10px 14px;
+  background-color: white;
+  color: white;
+  border: none;  
+}
+
+
+.create-category-button {
+  font-weight: 550;
+  color: lightgrey;
 }
 
 .em {
